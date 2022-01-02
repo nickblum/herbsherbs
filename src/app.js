@@ -22,10 +22,14 @@ hbs.registerPartials(partialsPath)
 app.use(coopRouter)
 app.use(settingsRouter)
 app.get('',(req,res)=>{
-    res.render('index',{title:`Homestead`})
+    res.render('homestead',{title:'Homestead'})
 })
-app.get('/homestead',(req,res)=>{
-    res.render('index',{title:`Homestead`})
+app.get('/ajax_',(req,res)=>{
+    res.render('ajax_homestead',(error,html)=>{
+        if ( error ) html = 'Error: Unable to retrieve data'
+        res.setHeader('Content-Type', 'application/json');
+        res.end(JSON.stringify({ title: 'Homestead', html }));
+    })
 })
 app.get('*',(req,res)=>{
     res.render('error404')
