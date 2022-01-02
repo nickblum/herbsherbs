@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 
 router.get('/coop', (req,res) => {
-    res.send('get coop controller status')
+    res.render('coop',{title:`Chickens`})
 })
 
 router.post('/coop', (req,res) => {
