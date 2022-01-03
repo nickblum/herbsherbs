@@ -4,8 +4,9 @@ const router = express.Router()
 router.get('/settings', (req,res) => {
     res.render('settings',{title:`Settings`})
 })
-router.get('/ajax_settings', (req,res) => {
-    res.render('ajax_settings',(error,html)=>{
+
+router.get('/settings.json', (req,res) => {
+    res.render('settings',{contentOnly:true},(error,html)=>{
         if ( error ) html = 'Error: Unable to retrieve data'
         res.setHeader('Content-Type', 'application/json');
         res.end(JSON.stringify({ title: 'Settings', html }));

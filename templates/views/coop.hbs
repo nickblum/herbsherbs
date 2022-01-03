@@ -1,10 +1,3 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        {{>_head}}
-    </head>
-    <body>
-        {{>_topnav}}
-        <div id="main-content">{{>coop}}</div>
-    </body>
-</html>
+{{#unless contentOnly}}{{>site_top}}{{/unless}}
+<b>chicken coop</b>
+{{#unless contentOnly}}{{>site_bottom}}{{/unless}}
