@@ -36,3 +36,10 @@ window.onpopstate = function(e){
         window.history.back()
     }
 };
+
+
+// document.body.addEventListener("click", (event) => {
+//     if (event.target.classList.contains("editable")) {
+      
+//     }
+//   });
