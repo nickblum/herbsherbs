@@ -3,6 +3,7 @@ const path = require('path')
 const hbs = require('hbs')
 const coopRouter = require('./routers/coop')
 const settingsRouter = require('./routers/settings')
+const rf24Router = require('./routers/rf24')
 
 const app = express()
 const port = process.env.PORT || 3000
@@ -11,6 +12,7 @@ const publicDirectoryPath = path.join(__dirname,'../public')
 const viewsPath = path.join(__dirname,'../templates/views')
 const partialsPath = path.join(__dirname,'../templates/partials')
 
+app.use(express.json())
 app.set('view engine','hbs')
 app.set('views',viewsPath)
 app.use(express.static(publicDirectoryPath))
@@ -21,6 +23,7 @@ hbs.registerPartials(partialsPath)
  */
 app.use(coopRouter)
 app.use(settingsRouter)
+app.use(rf24Router)
 app.get('',(req,res)=>{
     res.render('homestead',{title:'Homestead'})
 })
