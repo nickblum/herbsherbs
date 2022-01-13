@@ -1,9 +1,13 @@
 const express = require('express')
 const rf24 = require('../rf24/interface')
+const MCU = require('../models/microcontroller')
 const router = express.Router()
 
 router.get('/rf24/:id',(req,res) => {
-    res.send('getting status...')
+    
+    
+    
+    //res.send('getting status...')
 })
 
 router.post('/rf24', async (req,res) => {
