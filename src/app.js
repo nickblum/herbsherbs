@@ -5,10 +5,6 @@ const coopRouter = require('./routers/coop')
 const settingsRouter = require('./routers/settings')
 const rf24Router = require('./routers/rf24')
 
-// Connect to db
-const db = require('./db/database');
-db.authenticate().then(()=>{}).catch(err => console.log('DB Error: ' + err))
-
 const app = express()
 const port = process.env.PORT || 3000
 

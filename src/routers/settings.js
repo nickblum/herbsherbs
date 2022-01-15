@@ -1,5 +1,5 @@
 const express = require('express')
-const MCU = require('../models/microcontroller')
+//const MCU = require('../models/mcu')
 const router = express.Router()
 
 router.get('/settings', (req,res) => {
@@ -16,7 +16,7 @@ router.get('/settings.json', (req,res) => {
 
 router.post('/settings/mcu', async (req,res) => {
     try {
-        await MCU.create({title:'Chicken Coop', description:'',rf_channel:123})
+        //await MCU.create({title:'Chicken Coop', description:'',rf_channel:123})
         res.send('ok')
     } catch (e) {
         res.status(500).send()
