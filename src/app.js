@@ -6,7 +6,6 @@ const settingsRouter = require('./routers/settings')
 const rf24Router = require('./routers/rf24')
 
 const app = express()
-const port = process.env.PORT || 3000
 
 const publicDirectoryPath = path.join(__dirname,'../public')
 const viewsPath = path.join(__dirname,'../templates/views')
@@ -38,6 +37,4 @@ app.get('*',(req,res)=>{
     res.render('error404')
 })
 
-app.listen(port,()=>{
-    console.log('App is running on port ' + port);
-})
+module.exports = app

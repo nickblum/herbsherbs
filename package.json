@@ -4,17 +4,20 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "env-cmd -f ./config/dev.env nodemon src/app.js -e js,hbs,py",
-    "prod": "env-cmd -f ./config/prod.env pm2 start src/app.js --watch",
-    "start": "env-cmd -f ./config/prod.env pm2 start src/app.js",
-    "migrate": "npx knex migrate:latest --knexfile db/knexfile.js",
-    "seed": "npx knex seed:run --knexfile db/knexfile.js"
+    "dev": "env-cmd -f ./config/dev.env nodemon src/index.js -e js,hbs,py",
+    "test": "env-cmd -f ./config/test.env jest --watch",
+    "start": "env-cmd -f ./config/prod.env pm2 start src/index.js --watch",
+    "migrate": "npx knex migrate:latest --knexfile src/db/knexfile.js",
+    "seed": "npx knex seed:run --knexfile src/db/knexfile.js"
   },
+  "jest": { "testEnvironment":"node"},
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "nodemon": "^2.0.15"
+    "jest": "^27.4.7",
+    "nodemon": "^2.0.15",
+    "supertest": "^6.2.2"
   },
   "dependencies": {
     "env-cmd": "^10.1.0",
