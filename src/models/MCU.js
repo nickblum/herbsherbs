@@ -18,7 +18,7 @@ class MCU extends Model {
                 }
             }
         }
-    } 
+    }
 }
 
 module.exports = MCU

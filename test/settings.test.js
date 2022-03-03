@@ -9,6 +9,9 @@ test('testing sync',()=>{
     expect(2+2).toBe(4)
 })
 
-test('testing async', async()=>{
-    const res = await request(app).post('/settings/mcu').send().expect('ok')
+test('testing async', async ()=>{
+    await request(app)
+        .post('/settings/mcu')
+        .send()
+        .expect(200)
 })

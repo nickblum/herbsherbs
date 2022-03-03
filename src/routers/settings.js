@@ -23,8 +23,8 @@ router.get('/settings.json', (req,res) => {
 router.get('/settings/mcu.json', async (req,res) => {
     try {
         //const mcus = await MCU.query()
-        const query = MCU.relatedQuery('actions').for(1)
-        const actions = await query
+        // const query = MCU.relatedQuery('actions').for(1)
+        // const actions = await query
 
         res.setHeader('Content-Type', 'application/json');
         res.send(JSON.stringify(actions));
@@ -36,8 +36,7 @@ router.get('/settings/mcu.json', async (req,res) => {
 
 router.post('/settings/mcu', async (req,res) => {
     try {
-        //await MCU.create({title:'Chicken Coop', description:'',rf_channel:123})
-        res.send('ok')
+        res.send()
     } catch (e) {
         res.status(500).send()
     }

@@ -18,21 +18,43 @@ app.use(express.static(publicDirectoryPath))
 hbs.registerPartials(partialsPath)
 
 /**
+ * DB Connect 
+ */
+const { Model } = require('objection')
+const MCU = require('./models/MCU')
+const knex = require('./db/database')
+const { groupByKey } = require('./utils/utils')
+Model.knex(knex);
+
+/**
  * Routing
  */
 app.use(coopRouter)
 app.use(settingsRouter)
 app.use(rf24Router)
-app.get('',(req,res)=>{
-    res.render('homestead',{title:'Homestead'})
+
+// Homestead Homepage
+app.get(['','/.json'], async (req,res)=>{
+
+    const query = await MCU.query()
+        .select('mcus.description AS mcu','actions.*')
+        .joinRelated('actions')
+    
+    const {groupByKey} = require('./utils/utils')
+    console.log(groupByKey(query,'mcu'))
+
+
+    if ( req.url.includes('.json') ){
+        res.render('homestead',{contentOnly:true},(error,html)=>{
+            if ( error ) html = 'Error: Unable to retrieve data'
+            res.setHeader('Content-Type', 'application/json');
+            res.end(JSON.stringify({ title: 'Homestead', html }));
+        })
+    } else {
+        res.render('homestead',{title:'Homestead'})
+    }
 })
-app.get('/.json',(req,res)=>{
-    res.render('homestead',{contentOnly:true},(error,html)=>{
-        if ( error ) html = 'Error: Unable to retrieve data'
-        res.setHeader('Content-Type', 'application/json');
-        res.end(JSON.stringify({ title: 'Homestead', html }));
-    })
-})
+
 app.get('*',(req,res)=>{
     res.render('error404')
 })

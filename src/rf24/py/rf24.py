@@ -14,23 +14,23 @@ def awaitResponse():
     radio.startListening()  # put radio in RX mode
   
     timeout = time.time() + listen_timeout  # keep trying for 10 seconds
-    response = -500.0
+    response = 500
     while time.time() < timeout:
         has_payload, pipe_number = radio.available_pipe()
         if has_payload:
-            buffer = radio.read(radio.payloadSize)
+            buffer = radio.read(radio.payloadSize) 
 
             # use struct.unpack() to convert the buffer into usable data
-            # expecting a little endian float, thus the format string "<f"
-            # buffer[:4] truncates padded 0s in case payloadSize was not set
-            response = struct.unpack("<f", buffer[:4])[0]
+            # buffer[:8] truncates padded 0s in case payloadSize was not set
+            response = struct.unpack("ff", buffer[:8])
             hasResponse = True
             break
 
-    if response >= -200:
-        print(json.dumps({"status": 200, "message": "OK", "body":response}))
-    else:
-        print(json.dumps({"status": abs(int(response)), "message": "MCU Error"}))
+    print( json.dumps( {
+        "status": response[0], 
+        "message": ('OK' if response[0] == 200 else 'MCU Error' ), 
+        "body": response[1]
+    }))
 
     radio.powerDown()
         
@@ -50,7 +50,10 @@ if __name__ == "__main__":
     radio.openReadingPipe(1, b"nodes")  # pipe 1, 
 
     radio.stopListening()  # put radio in TX mode
-    buffer = struct.pack('HH', *[mcuAction,mcuArg]) # H == short; that is, 2 bytes per int
+    
+    # H == short; that is, 2 bytes per int;
+    # Added two 0's to get the send and response the same siZe (send 4 int vs. receive 2 float)
+    buffer = struct.pack('HHHH', *[mcuAction,mcuArg,0,0]) 
     radio.payloadSize = len(buffer)
      
     timeout = time.time() + transmit_timeout # keep trying for xx seconds
